@@ -1,6 +1,6 @@
-# vMenu Configuration Options
+# vMenu-ox Configuration Options
 
-This is basic documentation for intergrated convars for well intergrations... duhh!
+This is basic documentation for integrated convars for well integrations... duhh!
 
 ## Available Configuration Options
 
