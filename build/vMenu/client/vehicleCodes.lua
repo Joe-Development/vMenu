@@ -3,7 +3,7 @@ local GenerateCooldown = false
 
 ---@class loadSharedVehicle
 exports("loadSharedVehicle", function()
-    
+
     if Cooldown then
         Config.Notify("vMenu", "You must wait before loading another vehicle!", "error", 6500)
         return false
@@ -57,7 +57,6 @@ exports("loadSharedVehicle", function()
     Config.Notify("vMenu", format("Name: **%s** \n\n Category: **Uncategorized** \n\n Class: **%s**", newName, vehicleClassLabel), "success", 6500)
 
     return true
-
 end)
 
 ---@class generateVehicleCode
@@ -98,5 +97,4 @@ AddEventHandler("vMenu:Vehicles:GenerateCode", function(saveName)
 
     print(format("Vehicle code generated: %s", generated))
     Config.Notify("vMenu", format("Vehicle code has been generated - id: #%s", generated), "success", 6500)
-
 end)

@@ -9,7 +9,7 @@ exports("loadSharedOutfit", function(name)
     if not name or type(name) ~= "string" then
         return lib.print.error("export: Tried to load outfit failed, no name provided.")
     end
-    
+
     name = string.sub(name, 8)
 
     if Cooldown then

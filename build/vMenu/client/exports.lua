@@ -59,12 +59,10 @@ exports("copyToClipboard", function(text)
 end)
 
 CreateThread(function()
-	-- # Sets whether or not players can lose their head props when they are hit/pushed.
-	-- # true = Props will stay on player (default vMenu and GTA Online behavior)
-	-- # false = vMenu will not touch this feature, by default this means that head props will fall off when the player is hit, which is the default behavior for GTA V Single Player peds.
-	-- setr keep_player_head_props false (this is configured in your permissions.cfg)
-
-	-- this is just to replace needing to run a constant thread loop on the client
+	--[[
+		vMenu - keep player head props 
+		so players dont lose their head props when they are hit/pushed
+	]]
 	if GetConvar("keep_player_head_props", "false") == "false" then
 		lib.onCache("ped", function(value)
 			SetPedCanLosePropsOnDamage(value, false, 0)
@@ -72,7 +70,10 @@ CreateThread(function()
 		end)
 	end
 
-	-- so blackouts dont affect vehicle headlights
+	--[[
+		vMenu - blackout vehicles (lights)
+		so blackouts dont affect vehicle headlights
+	]]
 	if GetConvar("vmenu_blackout_affect_vehicles", "false") == "false" then
 		SetArtificialLightsStateAffectsVehicles(false)
 	end
