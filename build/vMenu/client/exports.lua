@@ -63,7 +63,7 @@ CreateThread(function()
 		vMenu - keep player head props 
 		so players dont lose their head props when they are hit/pushed
 	]]
-	if GetConvar("keep_player_head_props", "false") == "false" then
+	if GetConvar("vmenu_keep_player_head_props", "false") == "false" then
 		lib.onCache("ped", function(value)
 			SetPedCanLosePropsOnDamage(value, false, 0)
 			SetPedConfigFlag(value, 427, true)

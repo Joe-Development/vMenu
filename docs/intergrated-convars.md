@@ -4,13 +4,13 @@ This is basic documentation for integrated convars for well integrations... duhh
 
 ## Available Configuration Options
 
-### `keep_player_head_props`
+### `vmenu_keep_player_head_props`
 **What it does:** Controls whether players keep their hats, glasses, and other head accessories when they get hit or pushed.
 
 **How to use it:**
 ```
 # Add this line to your server.cfg
-setr keep_player_head_props true
+setr vmenu_keep_player_head_props true
 ```
 
 **Options:**
