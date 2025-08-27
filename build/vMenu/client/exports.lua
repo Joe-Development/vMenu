@@ -2,9 +2,6 @@
 -- For integrations, check client/integrations.lua
 
 ---@class inputDialog
----@param windowTitle string
----@param defaultText string
----@param maxLength integer | 30
 ---@return string
 exports(
 	"inputDialog",
@@ -20,7 +17,7 @@ exports(
 	end
 )
 
-function rgbToHex(r, g, b)
+function RgbToHex(r, g, b)
 	-- Ensure values are within RGB bounds (0-255)
 	r = math.max(0, math.min(255, r))
 	g = math.max(0, math.min(255, g))
@@ -35,8 +32,8 @@ end
 ---@return string
 exports("colourDialog", function(type)
 	if not cache.vehicle then return "" end -- edge case
-	local defaultColour = type == 1 and rgbToHex(GetVehicleCustomPrimaryColour(cache.vehicle)) or
-		rgbToHex(GetVehicleCustomSecondaryColour(cache.vehicle))
+	local defaultColour = type == 1 and RgbToHex(GetVehicleCustomPrimaryColour(cache.vehicle)) or
+	RgbToHex(GetVehicleCustomSecondaryColour(cache.vehicle))
 	local input = lib.inputDialog("vMenu", {
 		{ type = 'color', label = 'Select a Colour', default = defaultColour },
 	})
