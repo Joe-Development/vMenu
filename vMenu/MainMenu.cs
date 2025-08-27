@@ -46,7 +46,6 @@ namespace vMenuClient
         public static WeaponLoadouts WeaponLoadoutsMenu { get; private set; }
         public static Recording RecordingMenu { get; private set; }
         public static MiscSettings MiscSettingsMenu { get; private set; }
-        public static VoiceChat VoiceChatSettingsMenu { get; private set; }
         public static About AboutMenu { get; private set; }
         public static bool NoClipEnabled { get { return NoClip.IsNoclipActive(); } set { NoClip.SetNoclipActive(value); } }
         public static IPlayerList PlayersList;
@@ -804,17 +803,6 @@ namespace vMenuClient
                 AddMenu(PlayerSubmenu, menu, button);
             }
 
-            // Add Voice Chat Menu.
-            if (IsAllowed(Permission.VCMenu))
-            {
-                VoiceChatSettingsMenu = new VoiceChat();
-                var menu = VoiceChatSettingsMenu.GetMenu();
-                var button = new MenuItem("Voice Chat Settings", "Change Voice Chat options here.")
-                {
-                    Label = "→→→"
-                };
-                AddMenu(Menu, menu, button);
-            }
 
             {
                 RecordingMenu = new Recording();

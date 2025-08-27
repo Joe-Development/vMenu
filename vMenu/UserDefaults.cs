@@ -658,20 +658,7 @@ namespace vMenuClient
                 prefs.Add("vehicleSpawnerSpawnInside", VehicleSpawnerSpawnInside);
             }
 
-            if (MainMenu.VoiceChatSettingsMenu != null)
-            {
-                VoiceChatEnabled = MainMenu.VoiceChatSettingsMenu.EnableVoicechat;
-                prefs.Add("voiceChatEnabled", VoiceChatEnabled);
 
-                VoiceChatProximity = MainMenu.VoiceChatSettingsMenu.currentProximity;
-                prefs.Add("voiceChatProximity", VoiceChatProximity);
-
-                ShowCurrentSpeaker = MainMenu.VoiceChatSettingsMenu.ShowCurrentSpeaker;
-                prefs.Add("voiceChatShowSpeaker", ShowCurrentSpeaker);
-
-                ShowVoiceStatus = MainMenu.VoiceChatSettingsMenu.ShowVoiceStatus;
-                prefs.Add("voiceChatShowVoiceStatus", ShowVoiceStatus);
-            }
 
             if (MainMenu.WeaponOptionsMenu != null)
             {
