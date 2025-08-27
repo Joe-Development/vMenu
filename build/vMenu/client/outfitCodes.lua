@@ -108,11 +108,17 @@ exports("loadOutfitFromCode", function(outfitCode)
     end
 
     for k, v in pairs(validData.Clothes) do
-        SetPedComponentVariation(PlayerPedId(), tonumber(k), v.Item, v.Texture, 0)
+        local id = tonumber(k)
+        if id then
+            SetPedComponentVariation(PlayerPedId(), id, v.Item, v.Texture, 0)
+        end
     end
 
     for k, v in pairs(validData.Props) do
-        SetPedPropIndex(PlayerPedId(), tonumber(k), v.Item, v.Texture, true)
+        local id = tonumber(k)
+        if id then
+            SetPedPropIndex(PlayerPedId(), id, v.Item, v.Texture, true)
+        end
     end
 
 
