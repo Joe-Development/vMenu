@@ -31,3 +31,21 @@ setr vmenu_blackout_affect_vehicles false
 **Options:**
 - `true`: Vehicle headlights will turn off during blackouts
 - `false` (Default): Vehicle headlights will continue to work during blackouts
+
+---
+
+### `vmenu_outfitcodes`
+**What it does:** Enables or disables the outfit code system, which requires oxmysql.
+
+**How to use it:**
+```
+# Add this line to your server.cfg
+setr vmenu_outfitcodes true
+```
+
+**Options:**
+- `true`: Enables the outfit code system (requires oxmysql resource to be started)
+- `false` (Default): Disables the outfit code system
+
+**Requirements:**
+- The oxmysql resource must be started for this feature to work
