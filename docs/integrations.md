@@ -49,3 +49,22 @@ setr vmenu_outfitcodes true
 
 **Requirements:**
 - The oxmysql resource must be started for this feature to work
+
+---
+
+### `vmenu_vehiclecodes`
+**What it does:** Enables or disables the vehicle code system, which requires oxmysql.
+
+**How to use it:**
+```
+# Add this line to your server.cfg
+setr vmenu_vehiclecodes true
+```
+
+**Options:**
+- `true`: Enables the vehicle code system (requires oxmysql resource to be started)
+- `false` (Default): Disables the vehicle code system
+
+**Requirements:**
+- The oxmysql resource must be started for this feature to work
+
