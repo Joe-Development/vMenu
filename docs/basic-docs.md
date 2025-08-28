@@ -6,7 +6,7 @@ The complete and official documentation for vMenu-ox can be found at:
 
 ## Quick Links
 
-- [Configuration Options](intergrated-convars.md)
+- [Configuration Options](integrations.md)
 - [Installation Guide](https://docs.grav.wtf/docs/vmenuox/installation)
 
 
