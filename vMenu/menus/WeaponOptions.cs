@@ -119,6 +119,7 @@ namespace vMenuClient.menus
                     var getOrRemoveWeapon = new MenuItem("Equip/Remove Weapon", "Add or remove this weapon to/form your inventory.")
                     {
                         LeftIcon = MenuItem.Icon.GUN
+                    
                     };
                     addonWeaponMenu.AddMenuItem(getOrRemoveWeapon);
 
@@ -178,6 +179,8 @@ namespace vMenuClient.menus
                             {
                                 RemoveWeaponFromPed(Game.PlayerPed.Handle, hash);
                                 Subtitle.Custom("Weapon removed.");
+
+
                             }
                             else
                             {
@@ -605,6 +608,8 @@ namespace vMenuClient.menus
                             {
                                 RemoveWeaponFromPed(Game.PlayerPed.Handle, hash);
                                 Subtitle.Custom("Weapon removed.");
+
+                                ClearSpecificWeaponComponentCheckmarks(sender);
                             }
                             else
                             {
@@ -830,9 +835,11 @@ namespace vMenuClient.menus
                     SetCurrentPedWeapon(Game.PlayerPed.Handle, (uint)GetHashKey("weapon_unarmed"), true);
                 }
                 else if (item == removeAllWeapons)
-                {
-                    ped.Weapons.RemoveAll();
-                }
+                 {
+                     ped.Weapons.RemoveAll();
+                     
+                     ClearAllWeaponComponentCheckmarks();
+                 }
                 else if (item == setAmmo)
                 {
                     SetAllWeaponsAmmo();
@@ -989,19 +996,57 @@ namespace vMenuClient.menus
             }
             
             void UpdateAddonWeaponComponents(Menu menu, ValidAddonWeapon weapon)
-            {
-                foreach (var item in menu.GetMenuItems())
-                {
-                    if (!addonWeaponComponents.TryGetValue(item, out var componentName))
-                        continue;
+             {
+                 foreach (var item in menu.GetMenuItems())
+                 {
+                     if (!addonWeaponComponents.TryGetValue(item, out var componentName))
+                         continue;
 
-                    if (!weapon.AddonComponents.TryGetValue(componentName, out var componentHash))
-                        continue;
+                     if (!weapon.AddonComponents.TryGetValue(componentName, out var componentHash))
+                         continue;
 
-                    bool isEquipped = HasPedGotWeaponComponent(Game.PlayerPed.Handle, weapon.Hash, componentHash);
-                    item.RightIcon = isEquipped ? MenuItem.Icon.TICK : MenuItem.Icon.NONE;
-                }
-            }
+                     bool isEquipped = HasPedGotWeaponComponent(Game.PlayerPed.Handle, weapon.Hash, componentHash);
+                     item.RightIcon = isEquipped ? MenuItem.Icon.TICK : MenuItem.Icon.NONE;
+                 }
+             }
+             
+             void ClearAllWeaponComponentCheckmarks()
+             {
+                 foreach (var weaponMenuPair in weaponInfo)
+                 {
+                     Menu menu = weaponMenuPair.Key;
+                     foreach (var item in menu.GetMenuItems())
+                     {
+                         if (weaponComponents.ContainsKey(item))
+                         {
+                             item.RightIcon = MenuItem.Icon.NONE;
+                         }
+                     }
+                 }
+                 
+                 foreach (var addonWeaponMenuPair in addonWeaponInfo)
+                 {
+                     Menu menu = addonWeaponMenuPair.Key;
+                     foreach (var item in menu.GetMenuItems())
+                     {
+                         if (addonWeaponComponents.ContainsKey(item))
+                         {
+                             item.RightIcon = MenuItem.Icon.NONE;
+                         }
+                     }
+                 }
+             }
+
+             void ClearSpecificWeaponComponentCheckmarks(Menu menu)
+             {
+                 foreach (var item in menu.GetMenuItems())
+                 {
+                     if (weaponComponents.ContainsKey(item)) {
+                        item.RightIcon = MenuItem.Icon.NONE;
+                     }
+                 }
+
+             }
         }
 
 
