@@ -6,7 +6,6 @@ using System.Text.RegularExpressions;
 using CitizenFX.Core;
 
 using Newtonsoft.Json;
-
 using static CitizenFX.Core.Native.API;
 using static vMenuServer.DebugLog;
 
@@ -61,9 +60,17 @@ namespace vMenuServer
         /// <param name="source"></param>
         private void SendBanList([FromSource] Player source)
         {
-            Log("Updating player with new banlist.\n");
-            var data = JsonConvert.SerializeObject(GetBanList()).ToString();
-            source.TriggerEvent("vMenu:SetBanList", data);
+            if (IsPlayerAceAllowed(source.Handle, "vMenu.OnlinePlayers.ViewBannedPlayers") /* this is a permission right? */
+             || IsPlayerAceAllowed(source.Handle, "vMenu.Everything")
+             || IsPlayerAceAllowed(source.Handle, "vMenu.OnlinePlayers.All"))
+            {
+                Log("Updating player with new banlist.\n");
+                var data = JsonConvert.SerializeObject(GetBanList()).ToString();
+                source.TriggerEvent("vMenu:SetBanList", data);
+                return;
+            }
+
+            source.TriggerEvent("vMenu:Notify", "~r~You do not have permission to view the banned players list.");
         }
 
         private static List<BanRecord> cachedBansList = new();
