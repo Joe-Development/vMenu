@@ -236,11 +236,13 @@ namespace vMenuClient.menus
                                     if (HasPedGotWeaponComponent(Game.PlayerPed.Handle, weapon.Hash, componentHash))
                                     {
                                         RemoveWeaponComponentFromPed(Game.PlayerPed.Handle, weapon.Hash, componentHash);
+                                        item.RightIcon = MenuItem.Icon.NONE;
                                         Subtitle.Custom("Component removed.");
                                     }
                                     else
                                     {
                                         EquipWeaponComponent(weapon.Hash, componentHash);
+                                        item.RightIcon = MenuItem.Icon.TICK;
                                         Subtitle.Custom("Component equipped.");
                                     }
                                 }
@@ -660,11 +662,13 @@ namespace vMenuClient.menus
                                     if (HasPedGotWeaponComponent(Game.PlayerPed.Handle, weaponData.Hash, componentHash))
                                     {
                                         RemoveWeaponComponentFromPed(Game.PlayerPed.Handle, weaponData.Hash, componentHash);
+                                        item.RightIcon = MenuItem.Icon.NONE;
                                         Subtitle.Custom("Component removed.");
                                     }
                                     else
                                     {
                                         EquipWeaponComponent(weaponData.Hash, componentHash);
+                                        item.RightIcon = MenuItem.Icon.TICK;
                                         Subtitle.Custom("Component equipped.");
                                     }
                                 }
@@ -909,15 +913,95 @@ namespace vMenuClient.menus
             snipers.OnIndexChange += (sender, oldItem, newItem, oldIndex, newIndex) => { OnIndexChange(sender, newItem); };
             addonWeaponsMenu.OnIndexChange += (sender, oldItem, newItem, oldIndex, newIndex) => { OnIndexChange(sender, newItem); };
 
-            handGuns.OnMenuOpen += (sender) => { OnIndexChange(sender, sender.GetCurrentMenuItem()); };
-            rifles.OnMenuOpen += (sender) => { OnIndexChange(sender, sender.GetCurrentMenuItem()); };
-            shotguns.OnMenuOpen += (sender) => { OnIndexChange(sender, sender.GetCurrentMenuItem()); };
-            smgs.OnMenuOpen += (sender) => { OnIndexChange(sender, sender.GetCurrentMenuItem()); };
-            throwables.OnMenuOpen += (sender) => { OnIndexChange(sender, sender.GetCurrentMenuItem()); };
-            melee.OnMenuOpen += (sender) => { OnIndexChange(sender, sender.GetCurrentMenuItem()); };
-            heavy.OnMenuOpen += (sender) => { OnIndexChange(sender, sender.GetCurrentMenuItem()); };
-            snipers.OnMenuOpen += (sender) => { OnIndexChange(sender, sender.GetCurrentMenuItem()); };
-            addonWeaponsMenu.OnMenuOpen += (sender) => { OnIndexChange(sender, sender.GetCurrentMenuItem()); };
+            handGuns.OnMenuOpen += (sender) => { 
+                OnIndexChange(sender, sender.GetCurrentMenuItem());
+                
+                UpdateComponentBadges(sender);
+            };
+            rifles.OnMenuOpen += (sender) => { 
+                OnIndexChange(sender, sender.GetCurrentMenuItem());
+                
+                UpdateComponentBadges(sender);
+            };
+            shotguns.OnMenuOpen += (sender) => { 
+                OnIndexChange(sender, sender.GetCurrentMenuItem());
+                
+                UpdateComponentBadges(sender);
+            };
+            smgs.OnMenuOpen += (sender) => { 
+                OnIndexChange(sender, sender.GetCurrentMenuItem());
+                
+                UpdateComponentBadges(sender);
+            };
+            throwables.OnMenuOpen += (sender) => { 
+                OnIndexChange(sender, sender.GetCurrentMenuItem());
+                
+                UpdateComponentBadges(sender);
+            };
+            melee.OnMenuOpen += (sender) => { 
+                OnIndexChange(sender, sender.GetCurrentMenuItem());
+                
+                UpdateComponentBadges(sender);
+            };
+            heavy.OnMenuOpen += (sender) => { 
+                OnIndexChange(sender, sender.GetCurrentMenuItem());
+                
+                UpdateComponentBadges(sender);
+            };
+            snipers.OnMenuOpen += (sender) => { 
+                OnIndexChange(sender, sender.GetCurrentMenuItem());
+                
+                UpdateComponentBadges(sender);
+            };
+            addonWeaponsMenu.OnMenuOpen += (sender) => { 
+                OnIndexChange(sender, sender.GetCurrentMenuItem());
+                
+                UpdateComponentBadges(sender);
+            };
+            
+            void UpdateComponentBadges(Menu menu)
+            {
+                if (weaponInfo.TryGetValue(menu, out var weapon) && HasPedGotWeapon(Game.PlayerPed.Handle, weapon.Hash, false))
+                {
+                    UpdateRegularWeaponComponents(menu, weapon);
+                    return;
+                }
+                
+                if (addonWeaponInfo.TryGetValue(menu, out var addonWeapon) && HasPedGotWeapon(Game.PlayerPed.Handle, addonWeapon.Hash, false))
+                {
+                    UpdateAddonWeaponComponents(menu, addonWeapon);
+                }
+            }
+            
+            void UpdateRegularWeaponComponents(Menu menu, ValidWeapon weapon)
+            {
+                foreach (var item in menu.GetMenuItems())
+                {
+                    if (!weaponComponents.TryGetValue(item, out var componentName))
+                        continue;
+                        
+                    if (!weapon.Components.TryGetValue(componentName, out var componentHash))
+                        continue;
+                        
+                    bool isEquipped = HasPedGotWeaponComponent(Game.PlayerPed.Handle, weapon.Hash, componentHash);
+                    item.RightIcon = isEquipped ? MenuItem.Icon.TICK : MenuItem.Icon.NONE;
+                }
+            }
+            
+            void UpdateAddonWeaponComponents(Menu menu, ValidAddonWeapon weapon)
+            {
+                foreach (var item in menu.GetMenuItems())
+                {
+                    if (!addonWeaponComponents.TryGetValue(item, out var componentName))
+                        continue;
+
+                    if (!weapon.AddonComponents.TryGetValue(componentName, out var componentHash))
+                        continue;
+
+                    bool isEquipped = HasPedGotWeaponComponent(Game.PlayerPed.Handle, weapon.Hash, componentHash);
+                    item.RightIcon = isEquipped ? MenuItem.Icon.TICK : MenuItem.Icon.NONE;
+                }
+            }
         }
 
 
